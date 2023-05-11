@@ -1,0 +1,92 @@
+#UKMWP_wrapper p:not(.lead), #UKMWP_wrapper div {
+	font-family: Helvetica !important;
+	font-size: 12px !important;
+	color: #000000;
+	line-height: 14px !important;
+	/* Startside for UKM No: */
+}
+
+h1 {
+	font-family: Helvetica !important;
+	font-size: 36px !important;
+	color: #000000;
+	line-height: 43px !important;
+	font-weight: lighter !important;
+	margin-top: 40px !important;
+}
+
+h1#top {
+	margin-top: 20px !important;
+}
+
+h4 {
+	font-family: Helvetica-Bold !important;
+	font-size: 12px !important;
+	color: #000000;
+	line-height: 14px !important;
+}
+
+h5 {
+	font-family: Helvetica-Light !important;
+	font-size: 14px !important;
+	color: #585858 !important;
+	line-height: 17px !important;
+	margin-top: 25px !important;
+	margin-bottom: 16px !important;
+}
+
+.title {
+	font-weight: bold;
+}
+
+.list-unstyled {
+	margin-left: 0px;
+}
+li {
+	clear: both;
+}
+
+.site {
+	margin-top: 25px;
+	margin-bottom: 20px;
+}
+
+.site li.post .timeago {
+	width: 50px;
+	float: left;
+}
+
+.site li.post .link p {
+	font-size: 11px;
+}
+
+.site li.post .title p {
+	line-height: 40px;
+}
+
+.site h4 {
+	margin-bottom: 13px;
+	border-bottom: 1px solid #979797;
+	padding-bottom: 9px;
+}
+
+.actions {
+	margin-top: 30px;
+}
+
+.action {
+	text-align: center;
+	margin-right: 10px;
+	display: inline-block;
+}
+.action img {
+	margin-bottom: 6px;
+}
+
+#edit_arrangor {
+	border-left: 1px solid #C7C7C7;
+}
+
+.edit-link p {
+	line-height: 25px !important;
+}

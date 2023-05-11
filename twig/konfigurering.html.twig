@@ -1,0 +1,58 @@
+<style>
+.form-control {
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #d2d6de
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+}
+label {
+  padding-left:20px;
+}
+</style>
+
+  <div>
+    <h1>Konfigurering</h1>
+  </div>
+  <div>
+    <h3>Aktiv søknadsrunde er {{ gjeldenderunde.soknadsrunde_navn  == '' ? 'ikke satt' : gjeldenderunde.soknadsrunde_navn  }}</h3>
+  </div>
+  <form method="POST" action="?page=UKMstimuleringsadmin_konfigurering">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <div>
+            <label for="skjemaid">Velg søknadsrunde</label>
+          </div>
+          <select id="rundevalg"  name="skjemaid" class="form-select form-select-lg w-auto">
+            {% for skjema in skjemaer %}
+                <option value="{{ skjema.id }}" {{ skjema.id == gjeldenderunde.soknadsrunde_id ? 'selected' : ''}}>{{ skjema.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" {{ gjeldenderunde.visfylke == 'on' ? 'checked' : ''}} name="visfylke" id="visfylke">
+          <label class="form-check-label" for="visfylke"><b>Skal fylkene kunne sende inn kommentarer?</b></label>
+        </div>
+        <input type="submit" class="btn btn-success" value="Lagre" id="submit">
+      </div>
+    </div>
+  </form>
+
+	

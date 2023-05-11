@@ -1,0 +1,181 @@
+<style>
+body {
+	color: #566787;
+	background: #f5f5f5;
+	font-family: 'Varela Round', sans-serif;
+	font-size: 13px;
+}
+.table-responsive {
+    margin: 30px 0;
+}
+
+.table-wrapper {
+	background: #fff;
+	padding: 20px 25px;
+	border-radius: 3px;
+	min-width: 1000px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {        
+	padding-bottom: 15px;
+	background: #435d7d;
+	color: #fff;
+	padding: 16px 30px;
+	min-width: 50%;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+	font-size: 24px;
+}
+.table-title-th {        
+	padding-bottom: 15px;
+	background: #778899;
+	color: #fff;
+	padding: 16px 30px;
+	min-width: 40%;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+	font-size: 18px;
+}
+.table-title h2 {
+	margin: 5px 0 0;
+	font-size: 24px;
+}
+tfoot {
+	padding-bottom: 15px;
+	background: LightSlateGray;
+	color: #fff;
+	padding: 16px 30px;
+	min-width: 40%;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+	font-size: 18px;
+}
+td.tall {
+padding-right: 2em;
+text-align: right;
+}
+td.antall {
+text-align: center;
+}
+
+.container-left {
+   max-width: 20% !important;
+}
+.table {
+   max-width: 100% !important;
+}
+</style>
+
+<script>
+function pageRedirect(runde) {
+    var pageURL = jQuery(location).attr("href");
+    window.location.href = pageURL + "&fetchdata" + "&runde=" + runde;
+  } 
+
+jQuery(document).ready(function () {
+    jQuery('#soknader').DataTable({
+        paging: false,
+        ordering: true,
+        info: false,
+		search: false,
+    });
+}); 
+</script>
+{# {{ constant('\Twig\\Environment::VERSION') }} #}
+{% if visfylke.visfylke == 'off' and currentuserid != '1' %}
+	<td>
+		<h3>Her kommer det info om siste søknadsrunde samt mulighet for å sende inn kommentarer av søknadene til UKM Norge</h3>
+	</td>
+{% endif %}
+{% if antallsoknader.antall != '0' %}
+	<div class="container-sm">
+		{% if visfylke.visfylke == 'on' or currentuserid == '1' %}
+			<td>
+				<h1 class="display-4 font-italic">Søknadsrunde {{ aktivrunde.soknadsrunde_navn|slice(26, 50) }}</h1>
+				<h3>Denne runden ble det sendt inn {{ antallsoknader.antall }} søknader</h3>
+				<h4>Det ble søkt om totalt {{ antallsoknader.soktom|number_format(0,' ',' ') }} kroner</h3>
+			</td>
+			{% if visfylke.visfylke == 'on' and currentuserid != '1' %}
+				{% if soknaderfylke >= '1' %}
+					<td>
+						<h4>Du har {{ soknaderfylke }} søknader som venter på gjennomgang av deg</h4>
+						<button type="button" class="btn btn-primary" onclick="window.location.href='admin.php?page=UKMstimuleringsadmin_soknader';">
+							Trykk her for og se igjennom
+						</button>
+					</td>
+				{% endif %}
+			{% endif %}
+			<div class="table-responsive">
+				<div class="table-wrapper">
+					<div class="table-title">
+						<div class="row">
+							<div class="col-sm-6">
+								Søknader fordelt på fylke
+							</div>
+						</div>
+					</div>
+					<table id="fylkeoversikt" class="table table-striped table-bordered table-hover" style="width:100%">
+						<thead>
+							<tr>
+								<th class="table-title-th" style="width: 25%">Fylke</th>
+								<th class="table-title-th" style="width: 25%">Antall</th>
+								<th class="table-title-th" style="width: 25%">Søkt om tilsammen</th>
+								{% if currentuserid == '1' %}
+									<th class="table-title-th" style="width: 25%">Kommentert av fylke</th>
+								{% endif %}
+							</tr>
+						</thead>
+						<tbody>
+							{% for datafylke in datafylker %}
+								{% if currentuserid == '1' %} 
+									<tr onclick="window.location='?page=UKMstimuleringsadmin_soknader&fylke={{ datafylke.fylke }}'">
+								{% else %}
+									<tr>
+								{% endif %}
+								<td>{{ datafylke.fylke }}</td>
+								<td class="antall">{{ datafylke.antall }}</td>
+								<td class="tall">{{ datafylke.totaltsokt|number_format(0,' ',' ') }}</td>
+								{% if currentuserid == '1' %}
+									<td>{{ datafylke.antallkommentarer }} av {{ datafylke.antall }} søknader</td>
+								{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
+						<tfoot>
+							<tr>
+							<td><b>Totalt</b></td>
+							<td></td>
+							<td class="tall"><b>{{ antallsoknader.soktom|number_format(0,' ',' ') }}</b></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		{% endif %}	
+	</div>
+{% else %}
+	{% if aktivrunde == '' and currentuserid == '1' %}
+	<div class="container-sm">
+		<td>
+			<h2>
+				<b>Du må gå til konfigureringsmenyen og velge hvilken søknadsrunde du vil jobbe med</b>
+			</h2>
+		</td>
+	</div>
+	{% else %}
+		{% if currentuserid == '1' %}
+  			<form method="POST" action="?page=UKMstimuleringsadmin">
+				<div class="container-sm">
+					<td>
+						<h2>
+							Det er ingen søknader i valgte stimuleringsmiddel runde {{ aktivrunde.soknadsrunde_navn }}</br>
+						</h2>
+					</td>
+				 <input type="hidden" id="fetchdata" name="fetchdata" value="what">
+				 <input type="hidden" id="runde" name="runde" value={{ aktivrunde.soknadsrunde_id }}>
+				<button type="submit" class="btn btn-primary">Hent søknader fra JotForm</button>
+				</div>
+			</form>
+		{% endif %}
+	{% endif %}
+{% endif %}	

@@ -1,0 +1,148 @@
+
+/** ANDRE TING **/
+.header-dashboard {
+    text-align: center;
+    background: #fff;
+    padding: 1px 0px 0px 0px;
+    margin-left: -20px;
+    font-size: 32px;
+    padding: 10px 10px;
+    color: #000;
+    opacity: 0.65;
+    font-weight: 100;
+}
+
+.header-shortcuts {
+    margin-left: -20px;
+    background: #ECECEC;
+    padding: 8px 0px 0px 0px;
+    border-top: 1px solid #CCCACA;
+    border-bottom: 1px solid #CCCACA;
+	margin-bottom: 23px;
+}
+.header-shortcuts ul {
+	margin-bottom:4px;
+    padding-left: 28px; /* MOTVIRKER PADDING PÅ UL > LI */
+
+}
+.header-shortcuts li {
+    opacity: 0.65;
+    cursor: pointer;
+    margin-bottom: 0px;
+    font-size: 12px;
+    padding: 0px 28px; /* OBS: PADDING-LEFT PARENT UL */
+}
+.header-shortcuts li:hover {
+    opacity: 1;
+}
+.header-shortcuts img.icon {
+    max-width: 32px;
+    margin-bottom: 3px;
+}
+
+.table.table-dashboard.noborder {
+    border: none;
+}
+
+.table.table-dashboard {
+    border: 1px solid #5bc0de;
+}
+.table.table-dashboard > thead > tr > th {
+    background: #5bc0de;
+}
+
+.table.table-dashboard.warning {
+    border: 1px solid #f0ad4e;
+}
+.table.table-dashboard.warning > thead > tr > th {
+    background: #f0ad4e;
+}
+
+.table.table-dashboard.danger {
+    border: 1px solid #d9534f;
+}
+.table.table-dashboard.danger > thead > tr > th {
+    background: #d9534f;
+    color: #fff;
+}
+
+
+table.table.table-dashboard {
+    font-size: 12px;
+    background: #fff;
+    border-collapse: separate;
+}
+.table-dashboard a {
+	color: #000;
+}
+.table.table-dashboard > thead > tr > th {
+	padding: 5px 13px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+@media(max-width:767px){
+    .table.table-dashboard > thead > tr > th {
+        font-size: 13px;
+    }
+}
+.table.table-dashboard > thead > tr > th img {
+    margin: -1px 0px 0px 0px;
+}
+
+.table.table-dashboard > thead > tr > th {
+    padding: 9px 20px 9px 20px;
+    border-bottom: none;
+}
+
+.table.table-dashboard > thead > tr > th > p {
+    margin-bottom: -2px;
+}
+
+.table.table-dashboard > tbody:first-child > tr > td {
+	border-top: none;
+}
+
+#pameldte {
+    padding-bottom: 17px;
+}
+#pameldte .personer {
+    font-size: 40px;
+    font-weight: 900;
+    text-align: center;
+}
+#pameldte .innslag {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 12px;
+}
+
+#pameldte .helarsPersoner {
+    font-size: 26px;
+    font-weight: 594;
+    text-align: center;
+}
+
+#pameldte .explanation {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 12px;
+}
+
+.kalenderdetaljer {
+	opacity:0.8;
+	display:block;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	max-width: 90%;
+}
+
+.card_full_bredde {
+    margin-top: 0 !important;
+    margin-bottom: 20px;
+    max-width: 100% !important;
+}
