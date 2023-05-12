@@ -5,6 +5,13 @@ body {
 	font-family: 'Varela Round', sans-serif;
 	font-size: 13px;
 }
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
 .table-responsive {
     margin: 30px 0;
 }
@@ -84,7 +91,7 @@ jQuery(document).ready(function () {
 {# {{ constant('\Twig\\Environment::VERSION') }} #}
 {% if visfylke.visfylke == 'off' and currentuserid != '1' %}
 	<td>
-		<h3>Her kommer det info om siste søknadsrunde samt mulighet for å sende inn kommentarer av søknadene til UKM Norge</h3>
+		<h3 class="centered">Her kommer det info om siste søknadsrunde samt mulighet for å sende inn kommentarer av søknadene til UKM Norge</h3>
 	</td>
 {% endif %}
 {% if antallsoknader.antall != '0' %}
