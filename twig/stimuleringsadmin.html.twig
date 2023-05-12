@@ -89,7 +89,7 @@ jQuery(document).ready(function () {
 }); 
 </script>
 {# {{ constant('\Twig\\Environment::VERSION') }} #}
-{% if visfylke.visfylke == 'off' and currentuserid != '1' %}
+{% if visfylke.visfylke != 'on' and currentuserid != '1' %}
 	<td>
 		<h3 class="centered">Her kommer det info om siste søknadsrunde samt mulighet for å sende inn kommentarer av søknadene til UKM Norge</h3>
 	</td>
