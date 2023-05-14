@@ -12,7 +12,6 @@ require_once('UKM/Autoloader.php');
  */
 class UkmStimulAdmin {
 
-
 	/**
 	 * protecting  the input form the SQL injection and script injection.
 	 * @param $data
