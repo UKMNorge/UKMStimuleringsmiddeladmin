@@ -3,7 +3,7 @@
 use UKMNorge\Database\SQL\Query;
 use UKMNorge\Database\SQL\Insert;
 use UKMNorge\Database\SQL\Update;
-use UKMNorge\Database\SQL\Delete;
+
 
 require_once('UKM/Autoloader.php');
 
