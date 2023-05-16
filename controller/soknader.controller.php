@@ -6,14 +6,14 @@ use UKMNorge\Nettverk\Administrator;
 
 $soknader = new UkmStimulAdmin();
 $runde = $soknader->getGjeldendeRunde();
-$visfylke = $soknader->getVisFylke($runde[soknadsrunde_id]);
-$fylkermedsoknad = $soknader->hvilkeFylker($runde[soknadsrunde_id]);
-$fylkerinfo = $soknader->countFylke($runde[soknadsrunde_id]);
-$uploads = $soknader->getAlleUploads($runde[soknadsrunde_id]);
+$visfylke = $soknader->getVisFylke($runde['soknadsrunde_id']);
+$fylkermedsoknad = $soknader->hvilkeFylker($runde['soknadsrunde_id']);
+$fylkerinfo = $soknader->countFylke($runde['soknadsrunde_id']);
+$uploads = $soknader->getAlleUploads($runde['soknadsrunde_id']);
 
 /**Sjekk om kommentarer eksisterer og legg til i fylkerinfo */
 foreach($fylkerinfo as $key => $value) {
-    $fylkerinfo[$key]['antallkommentarer'] = count($soknader->harKommentert($runde[soknadsrunde_id], $fylkerinfo[$key]['fylke']));
+    $fylkerinfo[$key]['antallkommentarer'] = count($soknader->harKommentert($runde['soknadsrunde_id'], $fylkerinfo[$key]['fylke']));
 }
 
 $bruker = new Administrator(get_current_user_id());
@@ -33,17 +33,17 @@ if( isset( $_GET['soknadid'] ) ) {
 }
 if (get_current_user_id() == 1) {
     if( isset( $_GET['fylke'] ) ) {
-        $allesoknader = $soknader->getAlleSoknaderFylke($runde[soknadsrunde_id], $soknader->sanitizer($_GET['fylke']));
+        $allesoknader = $soknader->getAlleSoknaderFylke($runde['soknadsrunde_id'], $soknader->sanitizer($_GET['fylke']));
         $navnfylke = $_GET['fylke'];
     }
     else {
-        $allesoknader = $soknader->getAlleSoknader($runde[soknadsrunde_id]);
+        $allesoknader = $soknader->getAlleSoknader($runde['soknadsrunde_id']);
     }
 }
 else {
     $allesoknader = [];
     foreach($fylker as $fylke) {
-        $allesoknader = array_merge($allesoknader, $soknader->getAlleSoknaderFylke($runde[soknadsrunde_id], $fylke));
+        $allesoknader = array_merge($allesoknader, $soknader->getAlleSoknaderFylke($runde['soknadsrunde_id'], $fylke));
     }
 }
 
