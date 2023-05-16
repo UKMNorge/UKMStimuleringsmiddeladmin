@@ -33,8 +33,9 @@ if( isset( $_GET['soknadid'] ) ) {
 }
 if (get_current_user_id() == 1) {
     if( isset( $_GET['fylke'] ) ) {
-        $allesoknader = $soknader->getAlleSoknaderFylke($runde['soknadsrunde_id'], $soknader->sanitizer($_GET['fylke']));
         $navnfylke = $_GET['fylke'];
+        $allesoknader = $soknader->getAlleSoknaderFylke($runde['soknadsrunde_id'], $navnfylke);
+
     }
     else {
         $allesoknader = $soknader->getAlleSoknader($runde['soknadsrunde_id']);
