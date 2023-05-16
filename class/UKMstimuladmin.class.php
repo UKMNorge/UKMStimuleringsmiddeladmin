@@ -67,6 +67,20 @@ class UkmStimulAdmin {
 		return $ids;
 	}
 
+	public function getAllUploadIDs() {
+		$sql = new Query(
+				"SELECT id FROM `ukm_stimuladmin_uploads`");
+		$res = $sql->run();
+		
+		$ids = array();
+		while($row = Query::fetch($res)) {
+			$reportid = new stdClass();
+			$reportid->id = $row['id'];
+			$ids[] = $row['id'];
+		}
+		return $ids;
+	}
+
 	/**
 	 * Sjekker om fylket har søknader i gjeldende søknadsrunde
 	 *
@@ -200,7 +214,7 @@ class UkmStimulAdmin {
 		foreach ($sql_values as $key => $val) {
 			$sql->add($key, $val);
 		}
-var_dump('och');
+
 		try {
 			$id = $sql->run();
 
@@ -226,6 +240,19 @@ var_dump('och');
 		
 		return $this->getSoknadData( $res );
 	}
+
+	public function getRapportFromID($rapport_id) {
+		$sql = new Query(
+				"SELECT * ".
+				"FROM `ukm_stimuladmin_rapporter`".
+				"WHERE jotformID = '#sok_id'",
+			array("sok_id" => $rapport_id)
+		);
+		$res = $sql->run('array');
+		
+		return $this->getRapportData( $res );
+	}
+
 	/**
 	 * Henter utvalgte felter fra alle søknader i en runde
 	 *
@@ -244,6 +271,20 @@ var_dump('och');
 			$soknader[] = $row;
 		}		
 		return $soknader;
+	}
+
+	public function getAlleRapporter() {
+		$sql = new Query(
+				"SELECT jotformID,fylke,organisasjonsnavn,prosjekt_navn,prosjekt_ansvarlig,tall_innvilget_stotte ".
+				"FROM `ukm_stimuladmin_rapporter`".
+				"ORDER BY fylke"
+		);
+		$res = $sql->run();
+		$rapporter = [];
+		while( $row = Query::fetch( $res ) ) {
+			$rapporter[] = $row;
+		}		
+		return $rapporter;
 	}
 
 	public function getAlleUploads($runde) {
@@ -378,5 +419,13 @@ var_dump('och');
 			$soknad[$key] = $val;
 		}
 		return $soknad;
+	}
+
+	public function getRapportData( $res ) {
+		$rapport = [];
+		foreach ($res as $key => $val) {
+			$rapport[$key] = $val;
+		}
+		return $rapport;
 	}
 }

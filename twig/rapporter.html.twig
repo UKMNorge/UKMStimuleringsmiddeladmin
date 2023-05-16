@@ -1,7 +1,58 @@
 <style>
+body {
+	color: #566787;
+	background: #f5f5f5;
+	font-family: 'Varela Round', sans-serif;
+	font-size: 13px;
+}
 body > .container {
   padding-top: 40px;
   background-color: white;
+}
+.table-responsive {
+    margin: 30px 0;
+}
+
+.table-wrapper {
+	background: #fff;
+	padding: 20px 25px;
+	border-radius: 3px;
+	min-width: 1000px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {        
+	padding-bottom: 15px;
+	background: #435d7d;
+	color: #fff;
+	padding: 16px 30px;
+	min-width: 50%;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+	font-size: 24px;
+}
+.table-title-th {        
+	padding-bottom: 15px;
+	background: #778899;
+	color: #fff;
+	padding: 16px 30px;
+	min-width: 40%;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+	font-size: 18px;
+}
+.table-title h2 {
+	margin: 5px 0 0;
+	font-size: 24px;
+}
+tfoot {
+	padding-bottom: 15px;
+	background: LightSlateGray;
+	color: #fff;
+	padding: 16px 30px;
+	min-width: 40%;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+	font-size: 18px;
 }
       dl {
         width: 100%;
@@ -37,6 +88,9 @@ textarea {
   min-width: 20%;
   max-width: 100%;
 }
+td.tall {
+text-align: right;
+}
 
 .container {
    display: flex;
@@ -49,111 +103,71 @@ textarea {
    margin-top: 40px;
    width: 20%;
 }
-
-{# .dataTables_length,
-.dataTables_wrapper {
-  font-size: 1rem;
-  select,
-  input {
-    background-color: #f9f9f9;
-    border: 1px solid #999;
-    border-radius: 4px;
-    height: 3rem;
-    line-height: 2;
-    font-size: 1rem;
-    color: #333;
-  }
-
-  .dataTables_length,
-  .dataTables_filter {
-    margin-top: 30px;
-    margin-right: 20px;
-    margin-bottom: 10px;
-    display: inline-flex;
-  }
-} #}
 </style>
 <script>
 jQuery(document).ready(function () {
-    jQuery('#soknader').DataTable({
+    jQuery('#rapporter').DataTable({
+        fixedHeader: {
+            header: true,
+            headerOffset: 35,
+        },
+		colReorder: false,
         paging: false,
         ordering: true,
         info: false,
-		"language": {
-			"search": "Søk:"
-		}
+		language: {
+			search: "Søk:"
+		},
+        columnDefs: [
+            {
+                target: 4,
+                render: DataTable.render.number(null, null, 0,),
+            },
+        ],
     });
 });
          jQuery(document).ready(function(){
             jQuery('[data-toggle = "tooltip"]').tooltip();
          });
 </script>
-{% if soknad is empty %}
+{% if rapport is empty %}
 	<div class="container-xl">
 		<div class="table-responsive">
 			<div class="table-wrapper">
 				<div class="table-title">
 					<div class="row">
-						<div class="col-sm-6">
-							<h2><b>Søknadsrunde {{ gjeldenderunde.soknadsrunde_navn|slice(26, 50) }}</b></h2>
+						<div class="col-sm-4">
+							<h2><b>Rapportskjemaer</b></h2>
 						</div>
+							<form method="POST" action="?page=UKMstimuleringsadmin_rapporter">
+								<input type="hidden" id="fetchreports" name="fetchreports" value="what">
+								<button type="submit" class="btn btn-primary">Hent nye</button>
+							</form>
 					</div>
 				</div>
 				{% if currentuserid == '1' %}
-					<table id="soknader" class="table table-striped table-hover" style="width:100%">
+					<table id="rapporter" class="table table-striped table-hover" style="width:100%">
 						<thead>
 							<tr>
 								<th>Id</th>
 								<th>Fylke</th>
 								<th>Organisasjonsnavn</th>
 								<th>Navn på prosjektet</th>
-								<th>Beløp</th>
+								<th>Innvilget Beløp</th>
 								<th>Prosjektansvarlig</th>
-								<th>Kommentar</th>
 							</tr>
 						</thead>
 						<tbody>
-							{% for soknad in soknader %}
-								<tr onclick="window.location='?page=UKMstimuleringsadmin_soknader&soknadid={{ soknad.soknadID }}'">
-									<td>{{ soknad.soknadID }}</td>
-									<td>{{ soknad.fylke }}</td>
-									<td>{{ soknad.organisasjonsnavn }}</td>
-									<td>{{ soknad.prosjekt_navn }}</td>
-									<td>{{ soknad.belop }}</td>
-									<td>{{ soknad.prosjektansvarlig }}</td>
-									<td>{% if soknad.fylke_sist_kommentert is empty %}
-											Ikke kommentert
-										{% else %}
-											<h7 style="color: blue;">Lagt inn {{ soknad.fylke_sist_kommentert|date('\\k\\l\\.H:i d/m/Y') }} </h7>
-									</td>
-										{% endif %}
+							{% for rapport in rapporter %}
+								<tr onclick="window.location='?page=UKMstimuleringsadmin_rapporter&rapportid={{ rapport.jotformID }}'">
+									<td>{{ rapport.jotformID }}</td>
+									<td>{{ rapport.fylke }}</td>
+									<td>{{ rapport.organisasjonsnavn }}</td>
+									<td>{{ rapport.prosjekt_navn }}</td>
+									<td>{{ rapport.tall_innvilget_stotte }}</td>
+									<td>{{ rapport.prosjekt_ansvarlig }}</td>
 								</tr>
 							{% endfor %}
-						</tbody>
-					</table>
-				{% else %}
-					<table id="soknader" class="table table-striped table-hover">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Fylke</th>
-								<th>Organisasjonsnavn</th>
-								<th>Navn på prosjektet</th>
-								<th>Prosjektansvarlig</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% if visfylke.visfylke == 'on' %}
-								{% for soknad in soknader %}
-									<tr onclick="window.location='?page=UKMstimuleringsadmin_soknader&soknadid={{ soknad.soknadID }}'">
-										<td>{{ soknad.soknadID }}</td>
-										<td>{{ soknad.fylke }}</td>
-										<td>{{ soknad.organisasjonsnavn }}</td>
-										<td>{{ soknad.prosjekt_navn }}</td>
-										<td>{{ soknad.prosjektansvarlig }}</td>
-									</tr>
-								{% endfor %}
-							{% endif %}	
 						</tbody>
 					</table>
 				{% endif %}
@@ -163,138 +177,133 @@ jQuery(document).ready(function () {
 
 {% else %}
 	<div class="container-xl pt-5">
-		{% if visfylke.visfylke == 'on' or currentuserid == '1' %}
+		{% if currentuserid == '1' %}
 			<dl class="row">
 				<dt>Innlevert</dt>
-				<dd>{{ soknad.innlevert|date('d/m/Y \\k\\l\\.H:i') }}</dd>
+				<dd>{{ rapport.innlevert|date('d/m/Y \\k\\l\\.H:i') }}</dd>
 				<dt>Unik ID Nummer</dt>
-				<dd>{{ soknad.soknadID }}</dd>
-				<dt>Beløp de søker UKM Norge om:</dt>
-				<dd>{{ soknad.belop }}</dd>
-				<dt>Organisasjonsnavn</dt>
-				<dd>{{ soknad.organisasjonsnavn }}</dd>
-				<dt>Gateadresse</dt>
-				<dd>{{ soknad.gateadresse }}</dd>
-				<dt>Postnummer</dt>
-				<dd>{{ soknad.postnummer }}</dd>
-				<dt>Poststed</dt>
-				<dd>{{ soknad.poststed }}</dd>
+				<dd>{{ rapport.soknadID }}</dd>
 				<dt>Fylke</dt>
-				<dd>{{ soknad.fylke }}</dd>
-				<dt>Søkers nettside</dt>
-				<dd>{{ soknad.nettside }}</dd>
-				<dt>Prosjektansvarlig</dt>
-				<dd>{{ soknad.prosjektansvarlig }}</dd>
-				<dt>Stilling</dt>
-				<dd>{{ soknad.stilling }}</dd>
-				<dt>Mobilnummer</dt>
-				<dd>{{ soknad.mobilnr }}</dd>
-				<dt>Epost</dt>
-				<dd>{{ soknad.epost }}</dd>
-				<dt>Har dere tidligere mottatt støtte fra UKM Norge?</dt>
-				<dd>{{ soknad.tidligere }}</dd>
-				{% if soknad.tidligere == 'ja' %}
-					<dt>Hva har dere mottatt støtte til tidligere?</dt>
-					<dd>{{ soknad.tidligere_hva }}</dd>
-				{% endif %}
+				<dd>{{ rapport.fylke }}</dd>
 				<dt>Navn på prosjektet</dt>
-				<dd>{{ soknad.prosjekt_navn }}</dd>
-				<dt>Prosjektet beskrevet med maks 200 tegn. (En kort pitch)</dt>
-				<dd>{{ soknad.prosjekt_beskrivelse_kort }}</dd>
-				<dt>Samarbeidspartnere</dt>
-				<dd>{{ soknad.samarbeidspartnere }}</dd>
-				<dt>Målgruppe</dt>
-				<dd>{{ soknad.malgruppe }}</dd>
-				<dt>Målgruppe alder</dt>
-				<dd>{{ soknad.malgruppe_alder }}</dd>
-				<dt>Stipulert antall deltakere</dt>
-				<dd>{{ soknad.antall_deltakere }}</dd>
-				<dt>Oppstartsdato</dt>
-				<dd>{{ soknad.oppstartsdato|date('d/m/Y') }}</dd>
-				<dt>Rapportdato</dt>
-				<dd>{{ soknad.rapportdato|date('d/m/Y') }}</dd>
-				<dt>Hva vil dere å oppnå med prosjektet?</dt>
-				<dd>{{ soknad.prosjekt_oppnaelse }}</dd>
-				<dt>Prosjektbeskrivelse</dt>
-				<dd>{{ soknad.prosjekt_beskrivelse_lang }}</dd>
-				<dt>På hvilken måte kan prosjektet være til nytte for andre UKM-arrangører?</dt>
-				<dd>{{ soknad.prosjekt_nytte }}</dd>
-				<dt>UKM Norge</dt>
-				<dd>{{ soknad.tall_ukmnorge }}</dd>
-				<dt>Søkers egenandel</dt>
-				<dd>{{ soknad.tall_egenandel }}</dd>
-				<dt>Tilskudd fylkeskomm.</dt>
-				<dd>{{ soknad.tall_fylkeskommune }}</dd>
+				<dd>{{ rapport.prosjekt_navn }}</dd>
+				<dt>Innvilget støtte fra UKM Norge</dt>
+				<dd>{{ rapport.	tall_innvilget_stotte }}</dd>
+				<dt>Organisasjonsnavn</dt>
+				<dd>{{ rapport.organisasjonsnavn }}</dd>
+
+				<dt>Prosjektansvarlig</dt>
+				<dd>{{ rapport.prosjekt_ansvarlig }}</dd>
+				<dt>Mobilnummer</dt>
+				<dd>{{ rapport.mobilnr }}</dd>
+				<dt>Epost</dt>
+				<dd>{{ rapport.epost }}</dd>
+				<dt>Når ble prosjektet startet?</dt>
+				<dd>{{ rapport.prosjekt_start|date('d/m/Y') }}</dd>
+				<dt>Når ble prosjektet avsluttet?</dt>
+				<dd>{{ rapport.prosjekt_slutt|date('d/m/Y') }}</dd>
+				<dt>Oppsummering. Denne teksten kan bli brukt som ingress i UKM Norges eksempelsamling</dt>
+				<dd>{{ rapport.prosjekt_oppsummering }}</dd>
+				<dt>Hvilke mål hadde prosjektet?</dt>
+				<dd>{{ rapport.prosjekt_maal }}</dd>
+				<dt>Beskriv hvordan prosjektet oppfylte målene som var satt</dt>
+				<dd>{{ rapport.prosjekt_oppfylte_maal }}</dd>
+				<dt>Hvilke aktiviteter inngikk i prosjektet?</dt>
+				<dd>{{ rapport.prosjekt_aktiviteter }}</dd>
+				<dt>Beskriv hvordan disse aktivitetene ble gjennomført </dt>
+				<dd>{{ rapport.	prosjekt_aktiviteter_beskrivelse }}</dd>
+				<dt>Hvilke målgrupper hadde prosjektet</dt>
+				<dd>{{ rapport.prosjekt_maalgrupper }}</dd>
+				<dt>Beskriv hvordan dere gikk fram for å treffe disse målgruppene </dt>
+				<dd>{{ rapport.prosjekt_maalgruppe_beskrivelse }}</dd>
+				<dt>Hvor mange var deltakere?</dt>
+				<dd>{{ rapport.prosjekt_deltakere }}</dd>
+				<dt>Hvor mange ble berørt av dette i tillegg til deltakerne?</dt>
+				<dd>{{ rapport.prosjekt_deltakere_berort }}</dd>
+				<dt>På hvilke måter ble ungdom direkte involvert i prosjektet (Medbestemmelse)</dt>
+				<dd>{{ rapport.prosjekt_ungdom_innvolvert }}</dd>
+				<dt>Hva er du mest fornøyd med?</dt>
+				<dd>{{ rapport.prosjekt_fornoydmed }}</dd>
+				<dt>Hva kunne vært gjort annerledes?</dt>
+				<dd>{{ rapport.prosjekt_gjort_annerledes }}</dd>
+				<dt>Tips til andre UKM-arrangører som vil gjøre noe lignende</dt>
+				<dd>{{ rapport.prosjekt_tips }}</dd>
+				<dt>Egenandel søker / kommune</dt>
+				<dd>{{ rapport.tall_egenandel_soker }}</dd>
+				<dt>Innvilget støtte fra UKM Norge</dt>
+				<dd>{{ rapport.tall_innvilget_stotte }}</dd>
+				<dt>Innvilget fylkeskommunalt tilskudd</dt>
+				<dd>{{ rapport.tall_innvilget_fylke }}</dd>
+				<dt>Annen innvilget støtte</dt>
+				<dd>{{ rapport.tall_innvilget_annen }}</dd>
 				<dt>Annen finansiering</dt>
-				<dd>{{ soknad.tall_annen1 }}</dd>
-				{% if soknad.tall_annen1 != '0' or soknad.tall_annen1_forklar !=''  %}
-					<dt>Forklar</dt>
-					<dd>{{ soknad.tall_annen1_forklar }}</dd>
-				{% endif %}
-				<dt>Totale inntekter</dt>
-				<dd>{{ soknad.tall_totale_inntekter }}</dd>
-				<dt>Kontroll</dt>
-				<dd>{{ soknad.tall_kontroll }}</dd>
+				<dd>{{ rapport.tall_annen_finansiering }}</dd>
+				<dt>Sum inntekter</dt>
+				<dd>{{ rapport.tall_sum_inntekter }}</dd>
 				<dt>Administrasjon av prosjektet</dt>
-				<dd>{{ soknad.tall_prosjekt_administrasjon }}</dd>
+				<dd>{{ rapport.tall_prosjekt_administrasjon }}</dd>
 				<dt>Honorarer</dt>
-				<dd>{{ soknad.tall_honorarer }}</dd>
+				<dd>{{ rapport.tall_honorarer }}</dd>
 				<dt>Leiekostnader</dt>
-				<dd>{{ soknad.tall_leiekostnader }}</dd>
-				<dt>Utstyr / rekvisita</dt>
-				<dd>{{ soknad.tall_utstyr_rekvisita }}</dd>
-				<dt>Reise / overnatting</dt>
-				<dd>{{ soknad.tall_reise_overnatting }}</dd>
-				<dt>Bespisning</dt>
-				<dd>{{ soknad.tall_bespisning }}</dd>
+				<dd>{{ rapport.tall_leiekostnader }}</dd>
+				<dt>Innkjøp av utstyr & rekvisitta</dt>
+				<dd>{{ rapport.tall_utstyr_rekvisita }}</dd>
+				<dt>Reise, overnatting og bespisning</dt>
+				<dd>{{ rapport.tall_reise_overnatting_besp }}</dd>
 				<dt>Annet</dt>
-				<dd>{{ soknad.tall_annet }}</dd>
-				{% if soknad.tall_annet_forklar is not empty %}
+				<dd>{{ rapport.tall_annet }}</dd>
+				{% if rapport.tall_annet_forklar is not empty %}
 					<dt>Forklar</dt>
-					<dd>{{ soknad.tall_annet_forklar }}</dd>
+					<dd>{{ rapport.tall_annet_forklar }}</dd>
 				{% endif %}
-				<dt>Totale utgifter</dt>
-				<dd>{{ soknad.tall_totale_utgifter }}</dd>
-				<dt>Kommentarer</dt>
-				<dd>{{ soknad.kommentar }}</dd>
-				{% for upload in uploads %}
-					{% if upload.submission_id == soknad.jotformID  %}
+				<dt>Sum utgifter</dt>
+				<dd>{{ rapport.tall_sum_utgifter }}</dd>
+				<dt>Bilder</dt>
+				{% set bilder = rapport.upload_bilder|split('\n') %}
+				<dd>
+				{% for bilde in bilder %}
+					<a href="{{ bilde }}">{{ bilde|replace({'https://www.jotform.com/uploads/jardar/51623902917355/5597898907919909401/': ''}) }}</a>
+				{% endfor %}
+				</dd>
+				<dt>Presseklipp</dt>
+				{% set presseklipps = rapport.upload_presseklipp|split('\n') %}
+				<dd>
+				{% for presseklipp in presseklips %}
+					<a href="{{ presseklipp }}">{{ presseklipp|replace({'https://www.jotform.com/uploads/jardar/51623902917355/5597898907919909401/': ''}) }}</a>
+				{% endfor %}
+				</dd>
+				<dt>Video</dt>
+				{% set videoer = rapport.upload_video|split('\n') %}
+				<dd>
+				{% for video in videoer %}
+					<a href="{{ video }}">{{ video|replace({'https://www.jotform.com/uploads/jardar/51623902917355/5597898907919909401/': ''}) }}</a>
+				{% endfor %}
+				</dd>
+				<dt>Rapport / skriftlig dokumentasjon</dt>
+				{% set reports = rapport.upload_rapport|split('\n') %}
+				<dd>
+				{% for report in reports %}
+					<a href="{{ report }}">{{ report|replace({'https://www.jotform.com/uploads/jardar/51623902917355/': ''}) }}</a>
+				{% endfor %}
+				</dd>
+				<dt>Prosjektregnskap</dt>
+				{% set regnskap = rapport.upload_regnskap|split('\n') %}
+				<dd>
+				{% for regn in regnskap %}
+					<a href="{{ regn }}">{{ regn|replace({'https://www.jotform.com/uploads/jardar/51623902917355/5597898907919909401/': ''}) }}</a>
+				{% endfor %}
+				</dd>
+				{# {% for upload in uploads %}
+					{% if upload.submission_id == rapport.jotformID  %}
 						<dt>Vedlegg</dt>
 						<dd><a href="{{ upload.url|replace({'http': 'https'}) }}">{{ upload.name }}</a></dd>
-
 					{% endif %}
 				{% endfor %}	
-				{% if soknad.vedlegg_beskrivelse is not empty %}
+				{% if rapport.vedlegg_beskrivelse is not empty %}
 					<dt>Beskrivelse av vedleggene</dt>
-					<dd>{{ soknad.vedlegg_beskrivelse }}</dd>
-				{% endif %}
+					<dd>{{ rapport.vedlegg_beskrivelse }}</dd>
+				{% endif %} #}
 			</dl>
-
-		<div class="container">
-				<div class="left-col">
-					<form method="POST" action="?page=UKMstimuleringsadmin_soknader">
-						<input type="hidden" id="kommentarid" name="kommentarid" value="{{ soknad.soknadID }}">
-						<div class="form-group" style="padding:12px;">
-							{% if currentuserid == '1' %}
-								<b>Kommentar fra {{ soknad.fylke }}:</b>
-							{% else %}
-								{% if soknad.fylke_sist_kommentert is not null %}
-									Kommentar til søknaden
-								{% endif %}
-							{% endif %}
-							<textarea id="fylkekommentar" name="fylkekommentar" class="form-control animated" placeholder="Skriv en kommentar til søknaden her">{{ soknad.fylke_kommentar|replace({'\\': ''}) }}</textarea>
-							<input type="submit" class="btn btn-success" value="Send inn" id="submit">
-						</div>
-					</form>
-				</div>
-				{% if soknad.fylke_sist_kommentert is defined and soknad.fylke_sist_kommentert is not null %}
-					<div class="right-col">
-						Sist lagret:
-						<p>
-							{{ soknad.fylke_sist_kommentert is empty ? '' : soknad.fylke_sist_kommentert|date('d/m/Y \\k\\l\\.H:i') }}
-						</p>
-					</div>
-				{% endif %}
 		</div>
 	</div>
 	{% endif %}	

@@ -3,7 +3,6 @@
 require_once('UKM/vendor/autoload.php');
 require_once(__DIR__ . '/../class/UKMstimuladmin.class.php');
 use UKMNorge\Nettverk\Administrator;
-use UKMNorge\Database\SQL\Write;
 
 
 $soknader = new UkmStimulAdmin();
@@ -122,7 +121,8 @@ if( isset( $_POST['fetchdata'] ) ) {
             "submission_id" => $upload['submission_id'],
             "uploaded" => $upload['uploaded'],
             "date" => $upload['date'],
-            "url" => $upload['url']
+            "url" => $upload['url'],
+            "skjematype" => 'soknad'
         );
         $soknader->addUpload($sql_values);
     }
