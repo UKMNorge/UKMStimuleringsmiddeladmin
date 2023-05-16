@@ -14,7 +14,7 @@ $jotformAPI = new JotForm(UKM_JOTFORM_API_KEY);
 $skjemaer = $jotformAPI->getForms(0,100);
 $tilskuddsskjemaer = array();
 foreach($skjemaer as $skjema) {
-    if (str_starts_with($skjema[title], 'Tilskuddssoknad')) {
+    if (str_starts_with($skjema['title'], 'Tilskuddssoknad')) {
         $tilskuddsskjemaer[] = $skjema;
     }   
 }
@@ -22,22 +22,22 @@ foreach($skjemaer as $skjema) {
 
 // Sjekker om ny runde er valgt i konfigurering
 if( isset( $_POST['skjemaid'] )) {
-    if ($_POST['skjemaid'] == $runde[soknadsrunde_id] && $_POST['visfylke'] != $runde[visfylke]){
-        $soknader->setVisFylke($runde[soknadsrunde_id], $soknader->sanitizer($_POST['visfylke']));
+    if ($_POST['skjemaid'] == $runde['soknadsrunde_id'] && $_POST['visfylke'] != $runde['visfylke']){
+        $soknader->setVisFylke($runde['soknadsrunde_id'], $soknader->sanitizer($_POST['visfylke']));
         echo "<script>location.replace('admin.php?page=UKMstimuleringsadmin_konfigurering');</script>";
     }
-    if ($_POST['skjemaid'] == $runde[soknadsrunde_id]) {
+    if ($_POST['skjemaid'] == $runde['soknadsrunde_id']) {
         echo "<script>location.replace('admin.php?page=UKMstimuleringsadmin_konfigurering');</script>";
     }
-    if ($_POST['skjemaid'] != $runde[soknadsrunde_id]) {
+    if ($_POST['skjemaid'] != $runde['soknadsrunde_id']) {
         if (array_search($_POST['skjemaid'], array_column($allerunder, 'soknadsrunde_id')) !== false) {
-            $soknader->setGjeldendeRunde($runde[soknadsrunde_id], $soknader->sanitizer($_POST['skjemaid'])); 
+            $soknader->setGjeldendeRunde($runde['soknadsrunde_id'], $soknader->sanitizer($_POST['skjemaid'])); 
             echo "<script>location.replace('admin.php?page=UKMstimuleringsadmin_konfigurering');</script>";
         }
         else {
             foreach($skjemaer as $skjema) {
                 if ($skjema[id] == $_POST['skjemaid']) {
-                    $soknader->addRunde($soknader->sanitizer($_POST['skjemaid']), $skjema[title], $runde[soknadsrunde_id]);
+                    $soknader->addRunde($soknader->sanitizer($_POST['skjemaid']), $skjema['title'], $runde['soknadsrunde_id']);
                 }   
             }
             echo "<script>location.replace('admin.php?page=UKMstimuleringsadmin_konfigurering');</script>";

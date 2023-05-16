@@ -7,10 +7,10 @@ use UKMNorge\Nettverk\Administrator;
 
 $soknader = new UkmStimulAdmin();
 $runde = $soknader->getGjeldendeRunde();
-$visfylke = $soknader->getVisFylke($runde[soknadsrunde_id]);
-$fylkermedsoknad = $soknader->hvilkeFylker($runde[soknadsrunde_id]);
-$alleids = $soknader->getAllIDs($runde[soknadsrunde_id]);
-$fylkestats = $soknader->countFylke($runde[soknadsrunde_id]);
+$visfylke = $soknader->getVisFylke($runde['soknadsrunde_id']);
+$fylkermedsoknad = $soknader->hvilkeFylker($runde['soknadsrunde_id']);
+$alleids = $soknader->getAllIDs($runde['soknadsrunde_id']);
+$fylkestats = $soknader->countFylke($runde['soknadsrunde_id']);
 
 
 /**
@@ -33,7 +33,7 @@ foreach($bruker->getOmrader('fylke') as $omrade) {
 $harsoknader= [];
 $antallsoknaderfylke = 0;
 foreach($fylker as $fylke) {
-    $harsoknader = $soknader->harSoknader($runde[soknadsrunde_id], $fylke);
+    $harsoknader = $soknader->harSoknader($runde['soknadsrunde_id'], $fylke);
     $antallsoknaderfylke = $antallsoknaderfylke + count($harsoknader);
 }
 /**
@@ -41,7 +41,7 @@ foreach($fylker as $fylke) {
  */
 $fylkerinfo = $fylkestats;
 foreach($fylkerinfo as $key => $value) {
-    $fylkerinfo[$key]['antallkommentarer'] = count($soknader->harKommentert($runde[soknadsrunde_id], $fylkerinfo[$key]['fylke']));
+    $fylkerinfo[$key]['antallkommentarer'] = count($soknader->harKommentert($runde['soknadsrunde_id'], $fylkerinfo[$key]['fylke']));
 }
 
 
@@ -50,7 +50,7 @@ foreach($fylkerinfo as $key => $value) {
  */
 if( isset( $_POST['fetchdata'] ) ) {
     $jotformAPI = new JotForm(UKM_JOTFORM_API_KEY);
-    $submissions = $jotformAPI->getFormSubmissions($runde[soknadsrunde_id],0,500);
+    $submissions = $jotformAPI->getFormSubmissions($runde['soknadsrunde_id'],0,500);
     foreach($submissions as $submission) {
         $soknadid = preg_replace('/[^0-9]/', '', $submission['answers'][168]['answer']);
         $sql_values =   array(
@@ -103,13 +103,13 @@ if( isset( $_POST['fetchdata'] ) ) {
             "vedlegg_filnavn" => $submission['answers'][132]['answer'][0],
             "vedlegg_prettyname" => $submission['answers'][132]['prettyFormat'],
             "vedlegg_beskrivelse" => $submission['answers'][134]['answer'],
-            "soknadsrunde" => $runde[soknadsrunde_id]
+            "soknadsrunde" => $runde['soknadsrunde_id']
             );
         if (!in_array($soknadid, $alleids)) {
             $soknader->addSoknad($sql_values);
         }
     }
-    $uploads = $jotformAPI->getFormFiles($runde[soknadsrunde_id]);
+    $uploads = $jotformAPI->getFormFiles($runde['soknadsrunde_id']);
     foreach($uploads as $upload) {
         $sql_values =   array(
             "id" => $upload['id'],
