@@ -109,7 +109,7 @@ class UkmStimulAdmin {
 			$res = $sql->run();
 		$kommentarer = [];
 		while( $row = Query::fetch( $res ) ) {
-			if ($row[fylke_kommentar] != '') {
+			if ($row['fylke_kommentar'] != '') {
 				$kommentarer[] = $row;
 			}
 		}		
@@ -352,7 +352,7 @@ class UkmStimulAdmin {
 		$res = $sql->run();
 		$row = Query::fetch( $res )	;
 		if ($idonly == 'id') {
-			return $row[soknadsrunde_id];
+			return $row['soknadsrunde_id'];
 		}
 		else {
 			return $row;
