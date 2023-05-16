@@ -23,12 +23,12 @@ foreach($bruker->getOmrader('fylke') as $omrade) {
 }
 if( isset( $_POST['fylkekommentar'] )) {
 
-        $soknader->setFylkeKommentar($soknader->sanitizer($_POST['kommentarid']), $soknader->sanitizer($_POST['fylkekommentar']));
+        $soknader->setFylkeKommentar($_POST['kommentarid'], $_POST['fylkekommentar']);
         echo "<script>location.replace('admin.php?page=UKMstimuleringsadmin_soknader&soknadid=" . $_POST['fylkekommentar'] ."');</script>";
 }
 
 if( isset( $_GET['soknadid'] ) ) {
-    $id = $soknader->sanitizer($_GET['soknadid']);
+    $id = $_GET['soknadid'];
     $soknad = $soknader->getSoknadFromID($id);
 }
 if (get_current_user_id() == 1) {
