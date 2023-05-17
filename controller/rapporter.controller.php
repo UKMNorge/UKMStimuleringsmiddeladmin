@@ -9,7 +9,7 @@ $soknader = new UkmStimulAdmin();
 $allerapporter = $soknader->getAlleRapporter();
 
 if( isset( $_GET['rapportid'] ) ) {
-    $id = $soknader->sanitizer($_GET['rapportid']);
+    $id = $_GET['rapportid'];
     $rapport = $soknader->getRapportFromID($id);
 }
 // foreach($rapporteralleids as $rapporteralleid) {
@@ -23,13 +23,18 @@ if( isset( $_POST['fetchreports'] ) ) {
     $uploadsalleids = $soknader->getAllUploadIDs();
     $jotformAPI = new JotForm(UKM_JOTFORM_API_KEY);
     $RapportFormID = UKM_JOTFORM_RAPPORT_ID;
-    $submissions = $jotformAPI->getFormSubmissions($RapportFormID,0,800);
+    $submissions = $jotformAPI->getFormSubmissions($RapportFormID,0,80);
     $uploads = $jotformAPI->getFormFiles($RapportFormID);
     // echo '<pre>';
     // var_dump($submissions);
     // echo '</pre>';
     // die;
     foreach($submissions as $submission) {
+        $rapportdbinsert = '';
+        $regnskapdbinsert = '';
+        $videodb = '';
+        $pressedb = '';
+        $bildedb = '';
         $jotformid = $submission['id'];
         $bilder = $submission['answers'][137]['answer'];
         $presseklipp = $submission['answers'][139]['answer'];
@@ -76,36 +81,36 @@ if( isset( $_POST['fetchreports'] ) ) {
             "tall_sum_utgifter" => $submission['answers'][129]['answer'],
             "upload_forklaring" => $submission['answers'][147]['answer'],
         );
-        if (is_array($bilder)) {
+
             foreach($bilder as $bilde) {
                 $bildedb .= $bilde . PHP_EOL;
             }
-            $sql_values += ["upload_bilder" => $bilderdb];
-        }
-        if (is_array($presseklipp)) {
+            $sql_values += ["upload_bilder" => $bildedb];
+
+
             foreach($presseklipp as $presse) {
                 $pressedb .= $presse . PHP_EOL;
             }
             $sql_values += ["upload_presseklipp" => $pressedb];
-        }
-        if (is_array($videoer)) {
+
+
             foreach($videoer as $video) {
                 $videodb .= $video . PHP_EOL;
             }
             $sql_values += ["upload_video" => $videodb];
-        }
-        if (is_array($rapporterdb)) {
+
+
             foreach($rapporterdb as $rapportdb) {
                 $rapportdbinsert .= $rapportdb . PHP_EOL;
             }
             $sql_values += ["upload_rapport" => $rapportdbinsert];
-        }
-        if (is_array($regnskap)) {
+
+
             foreach($regnskap as $regnskapdb) {
                 $regnskapdbinsert .= $regnskapdb . PHP_EOL;
             }
             $sql_values += ["upload_regnskap" => $regnskapdbinsert];
-        }
+
     //     echo '<pre>';
     // var_dump($sql_values);
     // echo '</pre>';
@@ -138,4 +143,5 @@ if( isset( $_POST['fetchreports'] ) ) {
 }
 UKMstimuleringsadmin::addViewData('rapporter', $allerapporter );
 UKMstimuleringsadmin::addViewData('rapport', $rapport );
+UKMstimuleringsadmin::addViewData('reports', '' );
 UKMstimuleringsadmin::addViewData('currentuserid', get_current_user_id() );

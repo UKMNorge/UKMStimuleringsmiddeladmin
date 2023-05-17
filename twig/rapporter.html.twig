@@ -179,7 +179,7 @@ jQuery(document).ready(function () {
 {% else %}
 	<div class="container-xl pt-5">
 		{% if currentuserid == '1' %}
-
+{% set reports = '' %}
 			<div class="row">
 				<div class="qr col-lg-4">Innlevert</div>
 				<div class="aw col-lg-6">{{ rapport.innlevert|date('d/m/Y \\k\\l\\.H:i') }}</div>
@@ -339,54 +339,60 @@ jQuery(document).ready(function () {
 
 			</div>
 			{% if rapport.upload_bilder is not empty %}
-			<div class="row">
-				<div class="qr col-lg-4">Bilder</div>
-				{% set bilder = rapport.upload_bilder|split('\n') %}
-				<div class="aw col-lg-6">
-					{% for bilde in bilder %}
-						<div class="qr-media"><a href="{{ bilde }}">{{ bilde|split('/')|last }}</a></div>
-					{% endfor %}
+				<div class="row">
+					<div class="qr col-lg-4">Bilder</div>
+					{% set bilder = rapport.upload_bilder|split('\n') %}
+					<div class="aw col-lg-6">
+						{% for bilde in bilder %}
+							<div class="qr-media"><a href="{{ bilde }}">{{ bilde|split('/')|last }}</a></div>
+						{% endfor %}
+					</div>
 				</div>
-			</div>
 			{% endif %}
 			{% if rapport.upload_presseklipp is not empty %}
-			<div class="row">
-				<div class="qr col-lg-4">Presseklipp</div>
-				{% set presseklipps = rapport.upload_presseklipp|split('\n') %}
-				<div class="aw col-lg-6">
-					{% for presseklipp in presseklips %}
-						<div class="qr-media"><a href="{{ presseklipp }}">{{ presseklipp|split('/')|last }}</a></div>
-					{% endfor %}
+				<div class="row">
+					<div class="qr col-lg-4">Presseklipp</div>
+					{% set presseklipps = rapport.upload_presseklipp|split('\n') %}
+					<div class="aw col-lg-6">
+						{% for presseklipp in presseklips %}
+							<div class="qr-media"><a href="{{ presseklipp }}">{{ presseklipp|split('/')|last }}</a></div>
+						{% endfor %}
+					</div>
 				</div>
-			</div>
 			{% endif %}
-			<div class="row">
-				<div class="qr col-lg-4">Video</div>
-				{% set videoer = rapport.upload_video|split('\n') %}
-				<div class="aw col-lg-6">
-					{% for video in videoer %}
-						<div class="qr-media"><a href="{{ video }}">{{ video|split('/')|last }}</a></div>
-					{% endfor %}
+			{% if rapport.upload_video is not empty %}
+				<div class="row">
+					<div class="qr col-lg-4">Video</div>
+					{% set videoer = rapport.upload_video|split('\n') %}
+					<div class="aw col-lg-6">
+						{% for video in videoer %}
+							<div class="qr-media"><a href="{{ video }}">{{ video|split('/')|last }}</a></div>
+						{% endfor %}
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="qr col-lg-4">Rapport / skriftlig dokumentasjon</div>
-				{% set reports = rapport.upload_rapport|split('\n') %}
-				<div class="aw col-lg-6">
-					{% for report in reports %}
-						<div class="qr-media"><a href="{{ report }}">{{ report|split('/')|last }}</a></div>
-					{% endfor %}
+			{% endif %}
+			{% if rapport.upload_rapport is not empty %}
+				<div class="row">
+					<div class="qr col-lg-4">Rapport / skriftlig dokumentasjon</div>
+					{% set reports = rapport.upload_rapport|split('\n') %}
+					<div class="aw col-lg-6">
+						{% for report in reports %}
+							<div class="qr-media"><a href="{{ report }}">{{ report|split('/')|last }}</a></div>
+						{% endfor %}
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="qr col-lg-4">Prosjektregnskap</div>
-				{% set regnskap = rapport.upload_regnskap|split('\n') %}
-				<div class="aw col-lg-6">
-					{% for regn in regnskap %}
-						<div class="qr-media"><a href="{{ regn }}">{{ regn|split('/')|last }}</a></div>
-					{% endfor %}
+			{% endif %}
+			{% if rapport.upload_regnskap is not empty %}
+				<div class="row">
+					<div class="qr col-lg-4">Prosjektregnskap</div>
+					{% set regnskap = rapport.upload_regnskap|split('\n') %}
+					<div class="aw col-lg-6">
+						{% for regn in regnskap %}
+							<div class="qr-media"><a href="{{ regn }}">{{ regn|split('/')|last }}</a></div>
+						{% endfor %}
+					</div>
 				</div>
-			</div>
+			{% endif %}
 			{% if rapport.upload_forklaring is not empty %}
 			<div class="row">
 				<div class="qr col-lg-4">Eventuell forklaring til de vedleggene du har lastet opp</div>
