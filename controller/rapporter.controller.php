@@ -23,7 +23,7 @@ if( isset( $_POST['fetchreports'] ) ) {
     $uploadsalleids = $soknader->getAllUploadIDs();
     $jotformAPI = new JotForm(UKM_JOTFORM_API_KEY);
     $RapportFormID = UKM_JOTFORM_RAPPORT_ID;
-    $submissions = $jotformAPI->getFormSubmissions($RapportFormID,0,80);
+    $submissions = $jotformAPI->getFormSubmissions($RapportFormID,0,800);
     $uploads = $jotformAPI->getFormFiles($RapportFormID);
     // echo '<pre>';
     // var_dump($submissions);
