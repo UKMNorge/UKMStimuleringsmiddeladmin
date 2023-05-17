@@ -23,7 +23,7 @@ if( isset( $_POST['fetchreports'] ) ) {
     $uploadsalleids = $soknader->getAllUploadIDs();
     $jotformAPI = new JotForm(UKM_JOTFORM_API_KEY);
     $RapportFormID = UKM_JOTFORM_RAPPORT_ID;
-    $submissions = $jotformAPI->getFormSubmissions($RapportFormID,0,7);
+    $submissions = $jotformAPI->getFormSubmissions($RapportFormID,0,800);
     $uploads = $jotformAPI->getFormFiles($RapportFormID);
     // echo '<pre>';
     // var_dump($submissions);
@@ -32,15 +32,10 @@ if( isset( $_POST['fetchreports'] ) ) {
     foreach($submissions as $submission) {
         $jotformid = $submission['id'];
         $bilder = $submission['answers'][137]['answer'];
-        $bilder_pretty = $submission['answers'][137]['prettyFormat'];
         $presseklipp = $submission['answers'][139]['answer'];
-        $presseklipp_pretty = $submission['answers'][139]['prettyFormat'];
         $videoer = $submission['answers'][141]['answer'];
-        $videoer_pretty = $submission['answers'][141]['prettyFormat'];
         $rapporterdb = $submission['answers'][143]['answer'];
-        $rapporterdb_pretty = $submission['answers'][143]['prettyFormat'];
         $regnskap = $submission['answers'][145]['answer'];
-        $regnskap_pretty = $submission['answers'][145]['answer']['prettyFormat'];
         $sql_values =   array(
             "jotformID" => $submission['id'],
             "innlevert" => $submission['created_at'],
@@ -79,6 +74,7 @@ if( isset( $_POST['fetchreports'] ) ) {
             "tall_annet" => $submission['answers'][126]['answer'],
             "tall_annet_forklar" => $submission['answers'][127]['answer'],
             "tall_sum_utgifter" => $submission['answers'][129]['answer'],
+            "upload_forklaring" => $submission['answers'][147]['answer'],
         );
         if (is_array($bilder)) {
             foreach($bilder as $bilde) {
@@ -109,12 +105,6 @@ if( isset( $_POST['fetchreports'] ) ) {
                 $regnskapdbinsert .= $regnskapdb . PHP_EOL;
             }
             $sql_values += ["upload_regnskap" => $regnskapdbinsert];
-        }
-        if (is_array($regnskap_pretty)) {
-            foreach($regnskap_pretty as $regnskapdb_pretty) {
-                $regnskapdbinsert_pretty .= $regnskapdb_pretty . PHP_EOL;
-            }
-            $sql_values += ["upload_regnskap_pretty" => $regnskapdbinsert_pretty];
         }
     //     echo '<pre>';
     // var_dump($sql_values);

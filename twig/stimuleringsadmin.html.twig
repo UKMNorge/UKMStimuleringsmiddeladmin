@@ -122,7 +122,9 @@ jQuery(document).ready(function () {
 							<form method="POST" action="?page=UKMstimuleringsadmin">
 								<input type="hidden" id="fetchdata" name="fetchdata" value="what">
 								<input type="hidden" id="runde" name="runde" value={{ aktivrunde.soknadsrunde_id }}>
-								<button type="submit" class="btn btn-primary">Hent nye</button>
+								{% if currentuserid == '1' %}
+									<button type="submit" class="btn btn-primary">Hent nye</button>
+								{% endif %}
 							</form>
 						</div>
 					</div>

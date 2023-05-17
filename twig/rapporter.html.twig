@@ -59,28 +59,27 @@ tfoot {
         overflow: hidden;
         {# background: #dbe0da; #}
       }
-dt {
-	float: left;
-	width: 26%;
+.qr {
   font-size: 15px;
   font-weight: 400;
   line-height: 1.35;
   min-height: 40px;
-  margin-bottom: 0;
-  position: sticky;
-  word-break: break-word;
+  padding: 10px;
 }
-dd {
-  width: 60%;
+.aw {
   font-size: 16px; 
   font-weight: 400; 
   line-height: 1.35;
   color: #000000;
-  margin-bottom: 10;
-  white-space: pre-wrap;
-  word-break: break-word;
+  padding: 10px;
+  white-space: pre-line;
 }
+.qr-media {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2%;
 
+}
 textarea {
   box-sizing: border-box;
   max-height: 160px; /* optional but recommended */
@@ -88,7 +87,8 @@ textarea {
   min-width: 20%;
   max-width: 100%;
 }
-td.tall {
+.tall {
+max-width: 10%;
 text-align: right;
 }
 
@@ -103,6 +103,7 @@ text-align: right;
    margin-top: 40px;
    width: 20%;
 }
+
 </style>
 <script>
 jQuery(document).ready(function () {
@@ -178,121 +179,222 @@ jQuery(document).ready(function () {
 {% else %}
 	<div class="container-xl pt-5">
 		{% if currentuserid == '1' %}
-			<dl class="row">
-				<dt>Innlevert</dt>
-				<dd>{{ rapport.innlevert|date('d/m/Y \\k\\l\\.H:i') }}</dd>
-				<dt>Unik ID Nummer</dt>
-				<dd>{{ rapport.soknadID }}</dd>
-				<dt>Fylke</dt>
-				<dd>{{ rapport.fylke }}</dd>
-				<dt>Navn på prosjektet</dt>
-				<dd>{{ rapport.prosjekt_navn }}</dd>
-				<dt>Innvilget støtte fra UKM Norge</dt>
-				<dd>{{ rapport.	tall_innvilget_stotte }}</dd>
-				<dt>Organisasjonsnavn</dt>
-				<dd>{{ rapport.organisasjonsnavn }}</dd>
 
-				<dt>Prosjektansvarlig</dt>
-				<dd>{{ rapport.prosjekt_ansvarlig }}</dd>
-				<dt>Mobilnummer</dt>
-				<dd>{{ rapport.mobilnr }}</dd>
-				<dt>Epost</dt>
-				<dd>{{ rapport.epost }}</dd>
-				<dt>Når ble prosjektet startet?</dt>
-				<dd>{{ rapport.prosjekt_start|date('d/m/Y') }}</dd>
-				<dt>Når ble prosjektet avsluttet?</dt>
-				<dd>{{ rapport.prosjekt_slutt|date('d/m/Y') }}</dd>
-				<dt>Oppsummering. Denne teksten kan bli brukt som ingress i UKM Norges eksempelsamling</dt>
-				<dd>{{ rapport.prosjekt_oppsummering }}</dd>
-				<dt>Hvilke mål hadde prosjektet?</dt>
-				<dd>{{ rapport.prosjekt_maal }}</dd>
-				<dt>Beskriv hvordan prosjektet oppfylte målene som var satt</dt>
-				<dd>{{ rapport.prosjekt_oppfylte_maal }}</dd>
-				<dt>Hvilke aktiviteter inngikk i prosjektet?</dt>
-				<dd>{{ rapport.prosjekt_aktiviteter }}</dd>
-				<dt>Beskriv hvordan disse aktivitetene ble gjennomført </dt>
-				<dd>{{ rapport.	prosjekt_aktiviteter_beskrivelse }}</dd>
-				<dt>Hvilke målgrupper hadde prosjektet</dt>
-				<dd>{{ rapport.prosjekt_maalgrupper }}</dd>
-				<dt>Beskriv hvordan dere gikk fram for å treffe disse målgruppene </dt>
-				<dd>{{ rapport.prosjekt_maalgruppe_beskrivelse }}</dd>
-				<dt>Hvor mange var deltakere?</dt>
-				<dd>{{ rapport.prosjekt_deltakere }}</dd>
-				<dt>Hvor mange ble berørt av dette i tillegg til deltakerne?</dt>
-				<dd>{{ rapport.prosjekt_deltakere_berort }}</dd>
-				<dt>På hvilke måter ble ungdom direkte involvert i prosjektet (Medbestemmelse)</dt>
-				<dd>{{ rapport.prosjekt_ungdom_innvolvert }}</dd>
-				<dt>Hva er du mest fornøyd med?</dt>
-				<dd>{{ rapport.prosjekt_fornoydmed }}</dd>
-				<dt>Hva kunne vært gjort annerledes?</dt>
-				<dd>{{ rapport.prosjekt_gjort_annerledes }}</dd>
-				<dt>Tips til andre UKM-arrangører som vil gjøre noe lignende</dt>
-				<dd>{{ rapport.prosjekt_tips }}</dd>
-				<dt>Egenandel søker / kommune</dt>
-				<dd>{{ rapport.tall_egenandel_soker }}</dd>
-				<dt>Innvilget støtte fra UKM Norge</dt>
-				<dd>{{ rapport.tall_innvilget_stotte }}</dd>
-				<dt>Innvilget fylkeskommunalt tilskudd</dt>
-				<dd>{{ rapport.tall_innvilget_fylke }}</dd>
-				<dt>Annen innvilget støtte</dt>
-				<dd>{{ rapport.tall_innvilget_annen }}</dd>
-				<dt>Annen finansiering</dt>
-				<dd>{{ rapport.tall_annen_finansiering }}</dd>
-				<dt>Sum inntekter</dt>
-				<dd>{{ rapport.tall_sum_inntekter }}</dd>
-				<dt>Administrasjon av prosjektet</dt>
-				<dd>{{ rapport.tall_prosjekt_administrasjon }}</dd>
-				<dt>Honorarer</dt>
-				<dd>{{ rapport.tall_honorarer }}</dd>
-				<dt>Leiekostnader</dt>
-				<dd>{{ rapport.tall_leiekostnader }}</dd>
-				<dt>Innkjøp av utstyr & rekvisitta</dt>
-				<dd>{{ rapport.tall_utstyr_rekvisita }}</dd>
-				<dt>Reise, overnatting og bespisning</dt>
-				<dd>{{ rapport.tall_reise_overnatting_besp }}</dd>
-				<dt>Annet</dt>
-				<dd>{{ rapport.tall_annet }}</dd>
-				{% if rapport.tall_annet_forklar is not empty %}
-					<dt>Forklar</dt>
-					<dd>{{ rapport.tall_annet_forklar }}</dd>
-				{% endif %}
-				<dt>Sum utgifter</dt>
-				<dd>{{ rapport.tall_sum_utgifter }}</dd>
-				<dt>Bilder</dt>
+			<div class="row">
+				<div class="qr col-lg-4">Innlevert</div>
+				<div class="aw col-lg-6">{{ rapport.innlevert|date('d/m/Y \\k\\l\\.H:i') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Unik ID Nummer</div>
+				<div class="aw col-lg-6">{{ rapport.jotformID }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Fylke</div>
+				<div class="aw col-lg-6">{{ rapport.fylke }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Navn på prosjektet</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_navn }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Innvilget støtte fra UKM Norge</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_innvilget_stotte|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Organisasjonsnavn</div>
+				<div class="aw col-lg-6">{{ rapport.organisasjonsnavn }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Prosjektansvarlig</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_ansvarlig }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Mobilnummer</div>
+				<div class="aw col-lg-6">{{ rapport.mobilnr }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Epost</div>
+				<div class="aw col-lg-6">{{ rapport.epost }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Når ble prosjektet startet?</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_start|date('d/m/Y') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Når ble prosjektet avsluttet?</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_slutt|date('d/m/Y') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Oppsummering. Denne teksten kan bli brukt som ingress i UKM Norges eksempelsamling</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_oppsummering }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Hvilke mål hadde prosjektet?</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_maal }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Beskriv hvordan prosjektet oppfylte målene som var satt</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_oppfylte_maal }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Hvilke aktiviteter inngikk i prosjektet?</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_aktiviteter }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Beskriv hvordan disse aktivitetene ble gjennomført</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_aktiviteter_beskrivelse }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Hvilke målgrupper hadde prosjektet</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_maalgrupper }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Beskriv hvordan dere gikk fram for å treffe disse målgruppene</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_maalgruppe_beskrivelse }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Hvor mange var deltakere?</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_deltakere }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Hvor mange ble berørt av dette i tillegg til deltakerne?</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_deltakere_berort }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">På hvilke måter ble ungdom direkte involvert i prosjektet (Medbestemmelse)</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_ungdom_innvolvert }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Hva er du mest fornøyd med?</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_fornoydmed }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Hva kunne vært gjort annerledes?</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_gjort_annerledes }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Tips til andre UKM-arrangører som vil gjøre noe lignende</div>
+				<div class="aw col-lg-6">{{ rapport.prosjekt_tips }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Egenandel søker / kommune</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_egenandel_soker|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Innvilget støtte fra UKM Norge</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_innvilget_stotte|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Innvilget fylkeskommunalt tilskudd</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_innvilget_fylke|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Annen innvilget støtte</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_innvilget_annen|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Annen finansiering</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_annen_finansiering|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Sum inntekter</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_sum_inntekter|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Administrasjon av prosjektet</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_prosjekt_administrasjon |number_format(0,' ',' ')}}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Honorarer</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_honorarer|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Leiekostnader</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_leiekostnader|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Innkjøp av utstyr & rekvisita</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_utstyr_rekvisita|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Reise, overnatting og bespisning</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_reise_overnatting_besp|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Annet</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_annet|number_format(0,' ',' ') }}</div>
+			</div>
+			{% if rapport.tall_annet_forklar is not empty %}
+				<div class="row">
+					<div class="qr col-lg-4">Forklar</div>
+					<div class="aw col-lg-6">{{ rapport.tall_annet_forklar }}</div>
+				</div>
+			{% endif %}
+			<div class="row">
+				<div class="qr col-lg-4">Sum utgifter</div>
+				<div class="tall aw col-lg-6">{{ rapport.tall_sum_utgifter|number_format(0,' ',' ') }}</div>
+			</div>
+			<div class="row">
+				<div class="aw col-lg-4">Vedlegg</div>
+
+			</div>
+			{% if rapport.upload_bilder is not empty %}
+			<div class="row">
+				<div class="qr col-lg-4">Bilder</div>
 				{% set bilder = rapport.upload_bilder|split('\n') %}
-				<dd>
-				{% for bilde in bilder %}
-					<a href="{{ bilde }}">{{ bilde|replace({'https://www.jotform.com/uploads/jardar/51623902917355/5597898907919909401/': ''}) }}</a>
-				{% endfor %}
-				</dd>
-				<dt>Presseklipp</dt>
+				<div class="aw col-lg-6">
+					{% for bilde in bilder %}
+						<div class="qr-media"><a href="{{ bilde }}">{{ bilde|split('/')|last }}</a></div>
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+			{% if rapport.upload_presseklipp is not empty %}
+			<div class="row">
+				<div class="qr col-lg-4">Presseklipp</div>
 				{% set presseklipps = rapport.upload_presseklipp|split('\n') %}
-				<dd>
-				{% for presseklipp in presseklips %}
-					<a href="{{ presseklipp }}">{{ presseklipp|replace({'https://www.jotform.com/uploads/jardar/51623902917355/5597898907919909401/': ''}) }}</a>
-				{% endfor %}
-				</dd>
-				<dt>Video</dt>
+				<div class="aw col-lg-6">
+					{% for presseklipp in presseklips %}
+						<div class="qr-media"><a href="{{ presseklipp }}">{{ presseklipp|split('/')|last }}</a></div>
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+			<div class="row">
+				<div class="qr col-lg-4">Video</div>
 				{% set videoer = rapport.upload_video|split('\n') %}
-				<dd>
-				{% for video in videoer %}
-					<a href="{{ video }}">{{ video|replace({'https://www.jotform.com/uploads/jardar/51623902917355/5597898907919909401/': ''}) }}</a>
-				{% endfor %}
-				</dd>
-				<dt>Rapport / skriftlig dokumentasjon</dt>
+				<div class="aw col-lg-6">
+					{% for video in videoer %}
+						<div class="qr-media"><a href="{{ video }}">{{ video|split('/')|last }}</a></div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Rapport / skriftlig dokumentasjon</div>
 				{% set reports = rapport.upload_rapport|split('\n') %}
-				<dd>
-				{% for report in reports %}
-					<a href="{{ report }}">{{ report|replace({'https://www.jotform.com/uploads/jardar/51623902917355/': ''}) }}</a>
-				{% endfor %}
-				</dd>
-				<dt>Prosjektregnskap</dt>
+				<div class="aw col-lg-6">
+					{% for report in reports %}
+						<div class="qr-media"><a href="{{ report }}">{{ report|split('/')|last }}</a></div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="qr col-lg-4">Prosjektregnskap</div>
 				{% set regnskap = rapport.upload_regnskap|split('\n') %}
-				<dd>
-				{% for regn in regnskap %}
-					<a href="{{ regn }}">{{ regn|replace({'https://www.jotform.com/uploads/jardar/51623902917355/5597898907919909401/': ''}) }}</a>
-				{% endfor %}
-				</dd>
+				<div class="aw col-lg-6">
+					{% for regn in regnskap %}
+						<div class="qr-media"><a href="{{ regn }}">{{ regn|split('/')|last }}</a></div>
+					{% endfor %}
+				</div>
+			</div>
+			{% if rapport.upload_forklaring is not empty %}
+			<div class="row">
+				<div class="qr col-lg-4">Eventuell forklaring til de vedleggene du har lastet opp</div>
+				<div class="aw col-lg-6">{{ rapport.upload_forklaring }}</div>
+			</div>
+			{% endif %}
+
+
 				{# {% for upload in uploads %}
 					{% if upload.submission_id == rapport.jotformID  %}
 						<dt>Vedlegg</dt>
@@ -303,8 +405,8 @@ jQuery(document).ready(function () {
 					<dt>Beskrivelse av vedleggene</dt>
 					<dd>{{ rapport.vedlegg_beskrivelse }}</dd>
 				{% endif %} #}
-			</dl>
-		</div>
+
+
 	</div>
 	{% endif %}	
 {% endif %}	
