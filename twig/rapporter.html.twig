@@ -125,7 +125,6 @@ jQuery(document).ready(function () {
                 target: 4,
                 render: DataTable.render.number(null, null, 0,),
             },
-			{ type: "date", targets: 0 }
         ],
     });
 });
@@ -163,7 +162,7 @@ jQuery(document).ready(function () {
 						<tbody>
 							{% for rapport in rapporter %}
 								<tr onclick="window.location='?page=UKMstimuleringsadmin_rapporter&rapportid={{ rapport.jotformID }}'">
-									<td>{{ rapport.innlevert|date('d/m/Y \\k\\l\\.H:i') }}</td>
+									<td>{{ rapport.innlevert }}</td>
 									<td>{{ rapport.fylke }}</td>
 									<td>{{ rapport.organisasjonsnavn }}</td>
 									<td>{{ rapport.prosjekt_navn }}</td>
