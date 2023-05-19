@@ -113,8 +113,9 @@ jQuery(document).ready(function () {
             headerOffset: 35,
         },
 		colReorder: false,
-        paging: false,
+        paging: true,
         ordering: true,
+		order: [ 0, 'desc' ],
         info: false,
 		language: {
 			search: "Søk:"
@@ -124,6 +125,7 @@ jQuery(document).ready(function () {
                 target: 4,
                 render: DataTable.render.number(null, null, 0,),
             },
+			{ type: "date", targets: 0 }
         ],
     });
 });
@@ -150,7 +152,7 @@ jQuery(document).ready(function () {
 					<table id="rapporter" class="table table-striped table-hover" style="width:100%">
 						<thead>
 							<tr>
-								<th>Id</th>
+								<th>Innlevert</th>
 								<th>Fylke</th>
 								<th>Organisasjonsnavn</th>
 								<th>Navn på prosjektet</th>
@@ -161,7 +163,7 @@ jQuery(document).ready(function () {
 						<tbody>
 							{% for rapport in rapporter %}
 								<tr onclick="window.location='?page=UKMstimuleringsadmin_rapporter&rapportid={{ rapport.jotformID }}'">
-									<td>{{ rapport.jotformID }}</td>
+									<td>{{ rapport.innlevert|date('d/m/Y \\k\\l\\.H:i') }}</td>
 									<td>{{ rapport.fylke }}</td>
 									<td>{{ rapport.organisasjonsnavn }}</td>
 									<td>{{ rapport.prosjekt_navn }}</td>
@@ -352,9 +354,9 @@ jQuery(document).ready(function () {
 			{% if rapport.upload_presseklipp is not empty %}
 				<div class="row">
 					<div class="qr col-lg-4">Presseklipp</div>
-					{% set presseklipps = rapport.upload_presseklipp|split('\n') %}
+					{% set presse = rapport.upload_presseklipp|split('\n') %}
 					<div class="aw col-lg-6">
-						{% for presseklipp in presseklips %}
+						{% for presseklipp in presse %}
 							<div class="qr-media"><a href="{{ presseklipp }}">{{ presseklipp|split('/')|last }}</a></div>
 						{% endfor %}
 					</div>

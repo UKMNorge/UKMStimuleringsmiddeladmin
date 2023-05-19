@@ -275,9 +275,9 @@ class UkmStimulAdmin {
 
 	public function getAlleRapporter() {
 		$sql = new Query(
-				"SELECT jotformID,fylke,organisasjonsnavn,prosjekt_navn,prosjekt_ansvarlig,tall_innvilget_stotte ".
+				"SELECT jotformID,innlevert,fylke,organisasjonsnavn,prosjekt_navn,prosjekt_ansvarlig,tall_innvilget_stotte ".
 				"FROM `ukm_stimuladmin_rapporter`".
-				"ORDER BY fylke"
+				"ORDER BY innlevert desc"
 		);
 		$res = $sql->run();
 		$rapporter = [];
