@@ -119,6 +119,7 @@ jQuery(document).ready(function () {
 							<div class="col-sm-4">
 								Søknader fordelt på fylke
 							</div>
+
 							<form method="POST" action="?page=UKMstimuleringsadmin">
 								<input type="hidden" id="fetchdata" name="fetchdata" value="what">
 								<input type="hidden" id="runde" name="runde" value={{ aktivrunde.soknadsrunde_id }}>
@@ -126,6 +127,13 @@ jQuery(document).ready(function () {
 									<button type="submit" class="btn btn-primary">Hent nye</button>
 								{% endif %}
 							</form>
+						</div>
+						<div class="row">
+								{% if visfylke.visfylke == 'off' and currentuserid == '1' %}
+									<div class="col-sm-6"style="color: lightgray;" >
+										NB! Søknader vises ikke for fylkene
+									</div>
+								{% endif %}
 						</div>
 					</div>
 					<table id="fylkeoversikt" class="table table-striped table-bordered table-hover" style="width:100%">
