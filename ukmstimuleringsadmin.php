@@ -55,7 +55,7 @@ class UKMstimuleringsadmin extends Modul{
         if (static::erCurrentAdminFylkeAdmin()) {
             $userpage[] = add_menu_page(
                 'UKM Norge Stimuleringsmidler', 
-                'Stimuleringsmiddel Administrasjon', 
+                'Stimuleringsmidler Administrasjon', 
                 'subscriber', 
                 'UKMstimuleringsadmin_user',
                 ['UKMstimuleringsadmin','renderAdmin'], 
@@ -86,7 +86,7 @@ class UKMstimuleringsadmin extends Modul{
     public static function meny() {
         $page[] = add_menu_page(
             'UKM Norge Stimuleringsmidler', 
-            'Stimuleringsmiddel Administrasjon', 
+            'Stimuleringsmidler Administrasjon', 
             'superadmin', 
             'UKMstimuleringsadmin',
             ['UKMstimuleringsadmin','renderAdmin'], 
