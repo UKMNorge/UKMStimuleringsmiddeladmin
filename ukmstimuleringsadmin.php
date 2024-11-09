@@ -64,6 +64,14 @@ class UKMstimuleringsadmin extends Modul{
             );
             $userpage[] = add_submenu_page( 
                 'UKMstimuleringsadmin',
+                'Statistikk',
+                'Statistikk',
+                'subscriber',
+                'UKMstimuleringsadmin_statistikk',
+                ['UKMstimuleringsadmin','renderStatistikk']
+            );
+            $userpage[] = add_submenu_page( 
+                'UKMstimuleringsadmin',
                 'Tilskuddssøknader',
                 'Tilskuddssøknader',
                 'subscriber',
@@ -103,20 +111,28 @@ class UKMstimuleringsadmin extends Modul{
         );
         $page[] = add_submenu_page( 
             'UKMstimuleringsadmin',
-            'Rapporter',
-            'Rapporter',
+            'Statistikk',
+            'Statistikk',
             'subscriber',
-            'UKMstimuleringsadmin_rapporter',
-            ['UKMstimuleringsadmin','renderRapporter']
+            'UKMstimuleringsadmin_statistikk',
+            ['UKMstimuleringsadmin','renderStatistikk']
         );
-        $page[] = add_submenu_page( 
-            'UKMstimuleringsadmin',
-            'Konfigurering',
-            'Konfigurering',
-            'superadmin',
-            'UKMstimuleringsadmin_konfigurering',
-            ['UKMstimuleringsadmin','renderKonfigurering']
-        );
+        // $page[] = add_submenu_page( 
+        //     'UKMstimuleringsadmin',
+        //     'Rapporter',
+        //     'Rapporter',
+        //     'subscriber',
+        //     'UKMstimuleringsadmin_rapporter',
+        //     ['UKMstimuleringsadmin','renderRapporter']
+        // );
+        // $page[] = add_submenu_page( 
+        //     'UKMstimuleringsadmin',
+        //     'Konfigurering',
+        //     'Konfigurering',
+        //     'superadmin',
+        //     'UKMstimuleringsadmin_konfigurering',
+        //     ['UKMstimuleringsadmin','renderKonfigurering']
+        // );
         foreach( $page as $scripthook ) {
             add_action( 
                 'admin_print_styles-' . $scripthook, 
@@ -149,6 +165,10 @@ class UKMstimuleringsadmin extends Modul{
      */
     public static function renderSoknader() {
         static::setAction('soknader');
+        return static::renderAdmin();
+    }
+    public static function renderStatistikk() {
+        static::setAction('statistikk');
         return static::renderAdmin();
     }
     public static function renderRapporter() {

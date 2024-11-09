@@ -144,7 +144,7 @@ class UkmStimulAdmin {
 	 */
 	public function hvilkeFylker($runde) {
 		$sql = new Query(
-				"SELECT fylke AS fylke, count(*) AS antall ".
+				"SELECT fylke2024 AS fylke, count(*) AS antall ".
 				"FROM `ukm_stimuladmin_soknader` WHERE `soknadsrunde` = ".$runde." GROUP BY fylke"
 			);
 			$res = $sql->run();
@@ -347,7 +347,7 @@ class UkmStimulAdmin {
 		$sql = new Query(
 				"SELECT soknadsrunde_id, soknadsrunde_navn, visfylke ".
 				"FROM `ukm_stimuladmin_config`".
-				"WHERE `aktiv` = 1"
+				"WHERE `aktivfylke` = 1"
 		);
 		$res = $sql->run();
 		$row = Query::fetch( $res )	;

@@ -44,15 +44,21 @@ if (get_current_user_id() == 1) {
 else {
     $allesoknader = [];
     foreach($fylker as $fylke) {
-        if ($fylke == 'Akershus' || $fylke == 'Buskerud' || $fylke == 'Østfold' ) {
-            $fylke = 'Viken';
+        // if ($fylke == 'Akershus' || $fylke == 'Buskerud' || $fylke == 'Østfold' ) {
+        //     $fylke = 'Viken';
+        // }
+        // if ($fylke == 'Troms - Romsa - Tromssa' || $fylke == 'Finnmark - Finnmárku - Finmarkku') {
+        //     $fylke = 'Troms og Finnmark';
+        // }
+        // if ($fylke == 'Vestfold' || $fylke == 'Telemark') {
+        //     $fylke = 'Vestfold og Telemark';
+        // }  
+        if ($fylke == 'Troms - Romsa - Tromssa') {
+            $fylke = 'Troms';
         }
-        if ($fylke == 'Troms - Romsa - Tromssa' || $fylke == 'Finnmark - Finnmárku - Finmarkku') {
-            $fylke = 'Troms og Finnmark';
+        if ($fylke == 'Finnmark - Finnmárku - Finmarkku') {
+            $fylke = 'Finnmark';
         }
-        if ($fylke == 'Vestfold' || $fylke == 'Telemark') {
-            $fylke = 'Vestfold og Telemark';
-        }  
         if ($fylke == 'Trøndelag - Trööndelage') {
             $fylke = 'Trøndelag';
         }

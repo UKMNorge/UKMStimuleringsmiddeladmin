@@ -30,9 +30,22 @@ $fylker = [];
 foreach($bruker->getOmrader('fylke') as $omrade) {
     $fylker[] = $omrade->getFylke()->getNavn();
 }
+var_dump($fylker);
 $harsoknader= [];
 $antallsoknaderfylke = 0;
 foreach($fylker as $fylke) {
+    if ($fylke == 'Trøndelag - Trööndelage') {
+        $fylke = 'Trøndelag';
+    }
+    if ($fylke == 'Troms - Romsa - Tromssa') {
+        $fylke = 'Troms';
+    }
+    if ($fylke == 'Finnmark - Finnmárku - Finmarkku') {
+        $fylke = 'Finnmark';
+    }
+    if ($fylke == 'Nordland - Nordlánnda') {
+        $fylke = 'Nordland';
+    }
     $harsoknader = $soknader->harSoknader($runde['soknadsrunde_id'], $fylke);
     $antallsoknaderfylke = $antallsoknaderfylke + count($harsoknader);
 }

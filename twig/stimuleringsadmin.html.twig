@@ -120,13 +120,13 @@ jQuery(document).ready(function () {
 								Søknader fordelt på fylke
 							</div>
 
-							<form method="POST" action="?page=UKMstimuleringsadmin">
+							{# <form method="POST" action="?page=UKMstimuleringsadmin">
 								<input type="hidden" id="fetchdata" name="fetchdata" value="what">
 								<input type="hidden" id="runde" name="runde" value={{ aktivrunde.soknadsrunde_id }}>
 								{% if currentuserid == '1' %}
 									<button type="submit" class="btn btn-primary">Hent nye</button>
 								{% endif %}
-							</form>
+							</form> #}
 						</div>
 						<div class="row">
 								{% if visfylke.visfylke == 'off' and currentuserid == '1' %}
