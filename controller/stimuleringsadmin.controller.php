@@ -30,7 +30,7 @@ $fylker = [];
 foreach($bruker->getOmrader('fylke') as $omrade) {
     $fylker[] = $omrade->getFylke()->getNavn();
 }
-var_dump($fylker);
+
 $harsoknader= [];
 $antallsoknaderfylke = 0;
 foreach($fylker as $fylke) {
